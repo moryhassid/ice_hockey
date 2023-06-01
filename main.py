@@ -32,18 +32,29 @@ if __name__ == '__main__':
                 running = False
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP()]:
             print('Up was pressed')
             screen.fill(BACKGROUND_COLOR)
             my_racket.move_ip(0, -5)
             pygame.draw.rect(screen, color, my_racket)
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_DOWN()]:
+            print('Down was pressed')
+            screen.fill(BACKGROUND_COLOR)
+            my_racket.move_ip(0, 5)
+            pygame.draw.rect(screen, color, my_racket)
+            keys = pygame.key.get_pressed()
+        if keys[pygame.W_UP()]:
+            print('Up was pressed')
+            screen.fill(BACKGROUND_COLOR)
+            my_racket.move_ip(0, -5)
+            pygame.draw.rect(screen, color, my_racket)
+        if keys[pygame.S_DOWN()]:
             print('Down was pressed')
             screen.fill(BACKGROUND_COLOR)
             my_racket.move_ip(0, 5)
             pygame.draw.rect(screen, color, my_racket)
 
-        # TODO: Add keypress listener for the keys: "w" and "s"
+            # TODO: Add keypress listener for the keys: "w" and "s"
         # "w" - for up
         # "s" - for down
 
