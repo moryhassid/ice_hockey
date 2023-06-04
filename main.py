@@ -37,28 +37,23 @@ if __name__ == '__main__':
             print('Up was pressed')
             screen.fill(BACKGROUND_COLOR)
             my_racket1.move_ip(0, -5)
-            pygame.draw.rect(screen, color, my_racket1)
         elif keys[pygame.K_DOWN]:
             print('Down was pressed')
             screen.fill(BACKGROUND_COLOR)
             my_racket1.move_ip(0, 5)
-            pygame.draw.rect(screen, color, my_racket1)
-
             keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
             print('Up was pressed')
             screen.fill(BACKGROUND_COLOR)
             my_racket2.move_ip(0, -5)
-            pygame.draw.rect(screen, color, my_racket2)
         elif keys[pygame.K_s]:
             print('Down was pressed')
             screen.fill(BACKGROUND_COLOR)
             my_racket2.move_ip(0, 5)
-            pygame.draw.rect(screen, color, my_racket2)
 
-            # TODO: Add keypress listener for the keys: "w" and "s"
-        # "w" - for up
-        # "s" - for down
+        pygame.draw.rect(screen, color, my_racket1)
+        pygame.draw.rect(screen, color, my_racket2)
+        disc = pygame.draw.circle(screen, (255, 0, 0), ball_position, 15)
 
         # flip() the display to put your work on screen
         pygame.display.flip()
