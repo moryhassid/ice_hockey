@@ -21,9 +21,11 @@ def is_disc_hit_the_wall(ball_pos, ball_direction_now):
 def is_disc_hit_the_racket(ball_pos, racket1_pos, racket2_pos):
     if 175 <= ball_pos.y <= 375 and (ball_pos.x <= 0 or ball_pos.x >= 1070):
         print('You should look out for the disc, it might enter the gate')
+        # TODO: how to handle scenario when disc is in the gate region and racket is not?
+        # TODO: how to handle scenario when disc is in the gate region and racket is in the gate too?
+        # The gate (175-375)
 
 
-# The gate (175-375)
 if __name__ == '__main__':
     # pygame setup
     pygame.init()
