@@ -5,11 +5,17 @@ import os
 BACKGROUND_COLOR = (0, 151, 171)
 
 
-def is_disc_hit_the_wall(ball_pos):
+def is_disc_hit_the_wall(ball_pos, ball_direction_now):
+    # have we reached left wall or right wall?
     if ball_pos.x == 0 or ball_pos.x == 1070:
+        ball_direction_now['x'] = -ball_direction_now['x']
         print('You have reached the left or right wall')
-    elif ball_pos.y == 0 or ball_pos.y == 440:
+
+    if ball_pos.y == 0 or ball_pos.y == 550:
+        ball_direction_now['y'] = -ball_direction_now['y']
         print('You have reached the upper or lower wall')
+
+    return ball_direction_now
 
 
 if __name__ == '__main__':
@@ -31,7 +37,7 @@ if __name__ == '__main__':
     ball_position = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
     disc = pygame.draw.circle(screen, (255, 0, 0), ball_position, 15)
 
-    ball_direction = {'x': -5, 'y': 0}
+    ball_direction = {'x': 0, 'y': -5}
 
     while running:
         screen.fill(BACKGROUND_COLOR)
@@ -48,11 +54,9 @@ if __name__ == '__main__':
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             print('Up was pressed')
-            # screen.fill(BACKGROUND_COLOR)
             my_racket1.move_ip(0, -5)
         elif keys[pygame.K_DOWN]:
             print('Down was pressed')
-            # screen.fill(BACKGROUND_COLOR)
             my_racket1.move_ip(0, 5)
             keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
@@ -60,14 +64,13 @@ if __name__ == '__main__':
             my_racket2.move_ip(0, -5)
         elif keys[pygame.K_s]:
             print('Down was pressed')
-            # screen.fill(BACKGROUND_COLOR)
             my_racket2.move_ip(0, 5)
 
         pygame.draw.rect(screen, color, my_racket1)
         pygame.draw.rect(screen, color, my_racket2)
         disc = pygame.draw.circle(screen, (255, 0, 0), ball_position, 15)
 
-        is_disc_hit_the_wall(ball_position)
+        ball_direction = is_disc_hit_the_wall(ball_position, ball_direction)
         # flip() the display to put your work on screen
         pygame.display.flip()
 
