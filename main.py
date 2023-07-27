@@ -18,6 +18,12 @@ def is_disc_hit_the_wall(ball_pos, ball_direction_now):
     return ball_direction_now
 
 
+def is_disc_hit_the_racket(ball_pos, racket1_pos, racket2_pos):
+    if 175 <= ball_pos.y <= 375 and (ball_pos.x <= 0 or ball_pos.x >= 1070):
+        print('You should look out for the disc, it might enter the gate')
+
+
+# The gate (175-375)
 if __name__ == '__main__':
     # pygame setup
     pygame.init()
@@ -28,8 +34,9 @@ if __name__ == '__main__':
     running = True
     color = (25, 0, 0)
     # Rect(left, top, width, height)
-    my_racket1 = pygame.Rect(1070, 220, 10, 60)
-    my_racket2 = pygame.Rect(0, 220, 10, 60)
+    racket_width = 100
+    my_racket1 = pygame.Rect(1070, 220, 10, racket_width)
+    my_racket2 = pygame.Rect(0, 220, 10, racket_width)
     player_1 = pygame.draw.rect(screen, color, my_racket1)
     player_2 = pygame.draw.rect(screen, color, my_racket2)
     dt = 0
@@ -71,6 +78,7 @@ if __name__ == '__main__':
         disc = pygame.draw.circle(screen, (255, 0, 0), ball_position, 15)
 
         ball_direction = is_disc_hit_the_wall(ball_position, ball_direction)
+        is_disc_hit_the_racket(ball_position, my_racket1, my_racket2)
         # flip() the display to put your work on screen
         pygame.display.flip()
 
