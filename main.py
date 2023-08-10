@@ -69,7 +69,7 @@ def init_stage(screen, pace):
 if __name__ == '__main__':
     pygame.init()
 
-    font = pygame.font.Font('fonts/Umpush.ttf', 32)
+    font = pygame.font.Font('fonts/ChrustyRock-ORLA.ttf', 32)
     white = (255, 255, 255)
     green = (0, 255, 0)
     blue = (0, 0, 128)
