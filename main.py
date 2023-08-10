@@ -1,5 +1,4 @@
 # Old file from New computer!
-
 import pygame
 import time
 import os
