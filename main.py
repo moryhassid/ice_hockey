@@ -4,33 +4,33 @@ import os
 import random
 
 # Tasks:
-# 1. Scoreboard
-# 4. Change the speed of the disk according to the level
 # 5. Scoreboard saving scores on hard-disk
 # 6. save how long the game was played
 
 # Done:
 # 2. Write name of players
 # 3. In case of player losses, he keeps playing until the one of the players reach 5 points.
+# 1. Scoreboard
+# 4. Change the speed of the disk according to the level
 
 BACKGROUND_COLOR = (0, 151, 171)
 
 
-def is_disc_hit_the_wall(ball_pos, ball_direction_now):
+def is_disc_hit_the_wall(disc_pos, disc_direction_now):
     # have we reached left wall or right wall?
-    if ball_pos.x <= 0 or ball_pos.x >= 1070:
-        ball_direction_now['x'] = -ball_direction_now['x']
+    if disc_pos.x <= 0 or disc_pos.x >= 1070:
+        disc_direction_now['x'] = -disc_direction_now['x']
         print('You have reached the left or right wall')
 
-    if ball_pos.y <= 0 or ball_pos.y >= 550:
-        ball_direction_now['y'] = -ball_direction_now['y']
+    if disc_pos.y <= 0 or disc_pos.y >= 550:
+        disc_direction_now['y'] = -disc_direction_now['y']
         print('You have reached the upper or lower wall')
 
-    return ball_direction_now
+    return disc_direction_now
 
 
-def is_disc_reached_gate(ball_pos, racket1_pos, racket2_pos):
-    if 175 <= ball_pos.y <= 375 and (ball_pos.x < 20 or ball_pos.x > 1060):
+def is_disc_reached_gate(disc_pos, racket1_pos, racket2_pos):
+    if 175 <= disc_pos.y <= 375 and (disc_pos.x < 20 or disc_pos.x > 1060):
         print('You should look out for the disc, it might enter the gate')
         # The disc should enter the gate
 
@@ -41,29 +41,53 @@ def is_disc_reached_gate(ball_pos, racket1_pos, racket2_pos):
     return False
 
 
-def is_racket_protecting_gate(ball_pos, racket1_pos, racket2_pos, ball_direction_now):
+def is_racket_protecting_gate(disc_pos, racket1_pos, racket2_pos, disc_direction_now):
     # Rect(left, top, width, height)
     print(f"{my_racket2.top=}")
-    if (racket2_pos.top <= ball_pos.y <= (racket2_pos.top + racket2_pos.height) and ball_pos.x < 20) \
+    if (racket2_pos.top <= disc_pos.y <= (racket2_pos.top + racket2_pos.height) and disc_pos.x < 20) \
             or \
-            (racket1_pos.top <= ball_pos.y <= (racket1_pos.top + racket1_pos.height) and ball_pos.x > 900):
+            (racket1_pos.top <= disc_pos.y <= (racket1_pos.top + racket1_pos.height) and disc_pos.x > 900):
         print('Racket has protected gate')
-        ball_direction_now['x'] = -ball_direction_now['x']
-        ball_direction_now['y'] = -ball_direction_now['y']
-        return True, ball_direction_now
+        disc_direction_now['x'] = -disc_direction_now['x']
+        disc_direction_now['y'] = -disc_direction_now['y']
+        return True, disc_direction_now
 
-    return False, ball_direction_now
+    return False, disc_direction_now
 
 
 def init_stage(screen, pace):
-    ball_position = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-    disc = pygame.draw.circle(screen, (255, 0, 0), ball_position, 15)
+    disc_position = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+    disc = pygame.draw.circle(screen, (255, 0, 0), disc_position, 15)
     x_direction = (random.random() > 0.5) * 2 - 1
     y_direction = (random.random() > 0.5) * 2 - 1
     pace = pace * 1.2
-    ball_direction = {'x': x_direction * pace, 'y': y_direction * pace}
+    disc_direction = {'x': x_direction * pace, 'y': y_direction * pace}
 
-    return ball_position, disc, ball_direction, pace
+    return disc_position, disc, disc_direction, pace
+
+
+def show_score_board(player1_name, player2_name, screen, pace):
+    font = pygame.font.Font('fonts/ChrustyRock-ORLA.ttf', 32)
+    # white = (255, 255, 255)
+    # green = (0, 255, 0)
+    # blue = (0, 0, 128)
+    text_to_present = f'{player1_name}: 3, {player2_name}: 2'
+    text_player = font.render(text_to_present, True, (0, 0, 0))
+
+    # create a rectangular object for the
+    # text surface object
+    WIDTH_SCREEN = 1080
+    HEIGHT_SCREEN = 550
+
+    textRect = text_player.get_rect()
+
+    # set the center of the rectangular object.
+    textRect.center = (WIDTH_SCREEN // 2, HEIGHT_SCREEN // 2)
+    print(f'{text_player=}')
+    screen.blit(text_player, textRect)
+
+    pygame.time.wait(5000)
+    init_stage(screen, pace)
 
 
 if __name__ == '__main__':
@@ -116,7 +140,7 @@ if __name__ == '__main__':
     dt = 0
     pace = 10
 
-    ball_position, disc, ball_direction, pace = init_stage(screen, pace)
+    disc_position, disc, disc_direction, pace = init_stage(screen, pace)
 
     points = [0, 0]
 
@@ -133,8 +157,8 @@ if __name__ == '__main__':
         screen.blit(text_player1, textRect1)
         screen.blit(text_player2, textRect2)
 
-        ball_position.x += ball_direction['x']
-        ball_position.y += ball_direction['y']
+        disc_position.x += disc_direction['x']
+        disc_position.y += disc_direction['y']
 
         player_1 = pygame.draw.rect(screen, color_racket, my_racket1)
         for event in pygame.event.get():
@@ -164,24 +188,25 @@ if __name__ == '__main__':
         gate1_draw = pygame.draw.rect(screen, color_gate, gate1)
         gate2_draw = pygame.draw.rect(screen, color_gate, gate2)
 
-        disc = pygame.draw.circle(screen, (255, 0, 0), ball_position, 15)
+        disc = pygame.draw.circle(screen, (255, 0, 0), disc_position, 15)
 
         pygame.display.set_caption(
             f'{player1_name}: {points[0]}, {player2_name}: {points[1]}')
 
-        if is_disc_reached_gate(ball_position, my_racket1, my_racket2):
-            was_gate_protected, ball_direction = is_racket_protecting_gate(ball_position, my_racket1, my_racket2,
-                                                                           ball_direction)
+        if is_disc_reached_gate(disc_position, my_racket1, my_racket2):
+            was_gate_protected, disc_direction = is_racket_protecting_gate(disc_position, my_racket1, my_racket2,
+                                                                           disc_direction)
             if not was_gate_protected:
-                print("Swallow ball")
-                if ball_position.x > WIDTH_SCREEN - 100:
+                print("Swallow disc")
+                show_score_board(player1_name, player2_name, screen, pace)
+                if disc_position.x > WIDTH_SCREEN - 100:
                     points[1] += 1
-                    ball_position, disc, ball_direction, pace = init_stage(screen, pace)
-                elif ball_position.x < 10:
+                    disc_position, disc, disc_direction, pace = init_stage(screen, pace)
+                elif disc_position.x < 10:
                     points[0] += 1
-                    ball_position, disc, ball_direction, pace = init_stage(screen, pace)
+                    disc_position, disc, disc_direction, pace = init_stage(screen, pace)
         else:
-            ball_direction = is_disc_hit_the_wall(ball_position, ball_direction)
+            disc_direction = is_disc_hit_the_wall(disc_position, disc_direction)
 
         # flip() the display to put your work on screen
         pygame.display.flip()
