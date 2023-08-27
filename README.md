@@ -1,14 +1,19 @@
-# ice_hockey
-
-The legendary game
+# Air Hockey
 
 <p align="center">
-  <img src="images\ice_hockey.gif" width="700">
+  <img src="images\air_hockey.jpg" width="700">
 </p>
 
-I have implemented few functions:
 
-is_disc_hit_the_wall
+
+
+
+Air hockey is a Pong-like tabletop sport where two opposing players try to score goals against each other on a low-friction table using two hand-held discs ("mallets") and a lightweight plastic puck.
+
+I was thinking it would be fun to implement the game with Python,
+therefore I was thrilled and started coding.
+
+I have implemented few functions, an explanation of each function is written here below:
 
 | Function                  | Short explanation                                                                                                               |
 |---------------------------|---------------------------------------------------------------------------------------------------------------------------------|
@@ -20,4 +25,11 @@ is_disc_hit_the_wall
 
 <p align="center">
   <img src="images\Flowchart.png" width="700">
+</p>
+
+
+The result of coding the game: 
+
+<p align="center">
+  <img src="images\ice_hockey.gif" width="700">
 </p>
