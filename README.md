@@ -20,5 +20,5 @@ is_disc_hit_the_wall
 
 
 <p align="center">
-  <img src="images\flowchart.png" width="700">
+  <img src="images\Flowchart.png" width="700">
 </p>
