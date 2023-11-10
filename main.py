@@ -116,7 +116,6 @@ if __name__ == '__main__':
     POS_X_PLAYER_2 = WIDTH_SCREEN - 60
 
     # pygame setup
-    pygame.init()
     screen = pygame.display.set_mode((WIDTH_SCREEN, HEIGHT_SCREEN))
     screen.fill(BACKGROUND_COLOR)
     clock = pygame.time.Clock()
