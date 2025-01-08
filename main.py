@@ -15,6 +15,8 @@ import random
 
 BACKGROUND_COLOR = (0, 151, 171)
 
+start_time = time.time()
+
 
 def is_disc_hit_the_wall(disc_pos, disc_direction_now):
     # have we reached left wall or right wall?
@@ -81,12 +83,12 @@ def show_score_board(player1_name, player2_name, screen, pace):
 
     textRect = text_player.get_rect()
 
-    # set the center of the rectangular object.
+    pygame.time.wait    # set the center of the rectangular object.
     textRect.center = (WIDTH_SCREEN // 2, HEIGHT_SCREEN // 2)
     print(f'{text_player=}')
     screen.blit(text_player, textRect)
 
-    pygame.time.wait(5000)
+    pygame.time.wait(1000)
     init_stage(screen, pace)
 
 
@@ -214,5 +216,10 @@ if __name__ == '__main__':
         # dt is delta time in seconds since last frame, used for framerate-
         # independent physics.
         dt = clock.tick(20) / 1000
+
+        # At the end of the game
+        end_time = time.time()
+        duration = end_time - start_time
+        print(f"Game Duration: {duration:.2f} seconds")
 
     pygame.quit()
